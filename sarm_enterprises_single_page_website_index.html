@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SARM ENTERPRISES — SARM SPIRAL NOTEBOOKS</title>
+  <meta name="description" content="SARM Enterprises — A4 Spiral Notebooks, multiple page counts and great prices."/>
+  <style>
+    :root{
+      --accent:#0f766e;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#f8fafc;
+      --shadow: 0 6px 18px rgba(15,23,42,0.06);
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:#0f172a}
+    .container{max-width:1100px;margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo svg{height:56px;width:56px}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+
+    /* grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:18px}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .card img{width:100%;height:180px;object-fit:cover;border-radius:8px}
+    .card h3{margin:10px 0 6px;font-size:16px}
+    .price{font-weight:700;color:var(--accent)}
+    .actions{margin-top:auto;display:flex;gap:8px;align-items:center}
+    button.btn{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid #e6eef0;color:var(--accent)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* cart */
+    .cart-panel{position:fixed;right:18px;bottom:18px;width:320px;max-width:90%;background:white;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.12);padding:12px}
+    .cart-header{display:flex;justify-content:space-between;align-items:center}
+    .cart-items{max-height:300px;overflow:auto;margin-top:8px}
+    .cart-row{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed #eef2f6}
+    .cart-row img{width:56px;height:44px;object-fit:cover;border-radius:6px}
+    .qty{display:inline-flex;align-items:center;border-radius:8px;overflow:hidden}
+    .qty button{background:#f1f5f9;border:0;padding:6px 8px}
+
+    /* order modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45)}
+    .modal.open{display:flex}
+    .modal .panel{background:white;width:520px;max-width:96%;padding:18px;border-radius:12px}
+    .field{display:flex;flex-direction:column;margin-bottom:10px}
+    label{font-size:13px;color:var(--muted);margin-bottom:6px}
+    input,select,textarea{padding:8px;border-radius:8px;border:1px solid #e6eef0}
+    .row{display:flex;gap:10px}
+    .qr{display:flex;gap:10px;align-items:center}
+
+    footer{margin-top:28px;color:var(--muted);font-size:13px}
+    .quotes{background:linear-gradient(90deg,#ecfeff, #f0f9ff);padding:12px;border-radius:8px;margin-top:12px}
+
+    @media (max-width:560px){
+      header{flex-direction:column;align-items:flex-start}
+      .logo svg{height:48px;width:48px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <!-- simple SVG logo text -->
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY+" alt="SARM Logo" style="height:70px;width:auto;border-radius:8px;"/>
+        <div>
+          <h1>SARM SPIRAL NOTEBOOKS</h1>
+          <p class="lead">SARM ENTERPRISES — Kawoosa Khalisa, Badgam · WhatsApp orders available</p>
+        </div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div class="small">Call / WhatsApp: <strong>7006927825</strong></div>
+        <div class="small">Email: <strong>mir7amir@gmail.com</strong></div>
+      </div>
+    </header>
+
+    <!-- quotes -->
+    <section class="quotes">
+      <strong>Quote:</strong> "Good stationery is the starting point of every good idea." — SARM ENTERPRISES
+    </section>
+
+    <!-- product grid -->
+    <main>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px">
+        <h2 style="margin:0">Products</h2>
+        <div class="small">UPI: <strong>7006927825@pz</strong> &nbsp; · &nbsp; Pay via UPI QR below at checkout.</div>
+      </div>
+
+      <div class="grid" id="productGrid">
+        <!-- product cards injected by JS -->
+      </div>
+    </main>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div>
+          <div><strong>SARM ENTERPRISES</strong></div>
+          <div>Kawoosa Khalisa, Badgam</div>
+        </div>
+        <div>
+          <div class="small">Designed for small businesses • Accepts UPI</div>
+        </div>
+      </div>
+      <!-- QR & WhatsApp section -->
+  <div id="qrSection" style="margin-top:20px; display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+    <!-- QR controls -->
+    <div style="min-width:260px; background:#f8fafc; padding:12px; border-radius:10px; box-shadow:var(--shadow);">
+      <div style="font-weight:700;margin-bottom:8px">Scan to Order or Pay</div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div id="qrWrap" style="display:flex;gap:12px;align-items:center">
+          <div style="text-align:center;">
+            <div style="font-size:13px;font-weight:600">UPI Pay</div>
+            <img id="upiQrFooter" src="https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=upi://pay?pa=7006927825@pz&pn=SARM%20ENTERPRISES" alt="UPI QR" width="120" height="120" style="border-radius:8px;display:block;margin:6px auto;" />
+            <div style="display:flex;gap:6px;justify-content:center;margin-top:6px">
+              <a id="downloadUpi" class="ghost" href="#" download="SARM_UPI_QR.png">Download</a>
+            </div>
+          </div>
+
+          <div style="text-align:center;">
+            <div style="font-size:13px;font-weight:600">WhatsApp</div>
+            <img id="waQrFooter" src="https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=https://wa.me/917006927825" alt="WhatsApp QR" width="120" height="120" style="border-radius:8px;display:block;margin:6px auto;" />
+            <div style="display:flex;gap:6px;justify-content:center;margin-top:6px">
+              <a id="downloadWa" class="ghost" href="#" download="SARM_WhatsApp_QR.png">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div>
+          <label class="small">Size:</label>
+          <select id="qrSize" style="padding:6px;border-radius:8px;border:1px solid #e6eef0">
+            <option value="90">Small</option>
+            <option value="120" selected>Medium</option>
+            <option value="200">Large</option>
+          </select>
+        </div>
+        <div>
+          <label class="small">Align:</label>
+          <select id="qrAlign" style="padding:6px;border-radius:8px;border:1px solid #e6eef0">
+            <option value="left">Left</option>
+            <option value="center" selected>Center</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;font-size:12px;color:var(--muted)">Tip: Use the download button to save the QR for printing or sharing.</div>
+    </div>
+
+    <!-- branded QR preview -->
+    <div id="brandedPreview" style="flex:1;min-width:260px;background:linear-gradient(180deg,#fff,#fbfdfb);padding:12px;border-radius:10px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div style="font-weight:700">Branded QR Preview</div>
+      <div id="brandBox" style="padding:14px;border-radius:12px;background:linear-gradient(90deg,#fef7f6,#f7fff8);display:flex;gap:18px;align-items:center">
+        <div style="background:linear-gradient(180deg,#0f766e,#065f52);padding:10px;border-radius:8px;">
+          <img id="upiQrBranded" src="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=upi://pay?pa=7006927825@pz&pn=SARM%20ENTERPRISES" alt="Branded UPI" width="140" height="140" style="display:block;filter:grayscale(0.2) brightness(0.95);" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;max-width:180px">
+          <div style="font-weight:600">SARM ENTERPRISES</div>
+          <div style="font-size:13px;color:var(--muted)">Pay via UPI or Scan WhatsApp QR to chat & order.</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" id="downloadBranded">Download Branded QR</button>
+            <button class="ghost" id="centerBranded">Use on Header</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- floating WhatsApp button -->
+  <a id="floatingWa" href="https://wa.me/917006927825" target="_blank" style="position:fixed;right:18px;bottom:18px;background:#25D366;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgba(37,211,102,0.24);text-decoration:none;z-index:9999">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path d="M20.52 3.48a11.86 11.86 0 00-16.8 0 11.86 11.86 0 000 16.8L2 22l1.72-1.28A11.86 11.86 0 0020.52 3.48z" fill="#fff" opacity="0.0"/>
+      <path d="M17.472 14.382c-.306-.153-1.806-.888-2.084-.99-.278-.102-.48-.153-.684.153-.204.306-.788.99-.966 1.195-.178.204-.356.23-.662.077-.306-.153-1.29-.475-2.457-1.518-.907-.807-1.52-1.8-1.696-2.106-.178-.306-.02-.47.134-.622.138-.133.306-.356.46-.534.153-.178.204-.306.306-.51.102-.204.051-.383-.025-.535-.077-.153-.684-1.65-.94-2.26-.248-.586-.5-.507-.684-.517l-.586-.01c-.204 0-.535.077-.816.383-.278.306-1.06 1.04-1.06 2.534 0 1.495 1.084 2.94 1.235 3.143.153.204 2.13 3.248 5.158 4.554 3.03 1.307 3.03.87 3.57.816.539-.051 1.746-.712 1.993-1.398.248-.686.248-1.272.173-1.398-.074-.126-.279-.204-.585-.357z" fill="#fff"/>
+    </svg>
+  </a>
+
+</footer>
+  </div>
+
+  <!-- cart panel -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <div><strong>Cart</strong> <span id="cartCount">(0)</span></div>
+      <div><button class="ghost" id="clearCart">Clear</button></div>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+      <div><strong>Total:</strong> ₹<span id="cartTotal">0</span></div>
+      <div>
+        <button class="btn" id="checkoutBtn">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- order modal -->
+  <div class="modal" id="orderModal">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3 style="margin:0">Place Order</h3>
+        <button id="closeModal" class="ghost">Close</button>
+      </div>
+      <form id="orderForm">
+        <div class="row">
+          <div style="flex:1" class="field"><label>Name</label><input required name="name" /></div>
+          <div style="width:140px" class="field"><label>Phone</label><input required name="phone" value="7006927825"/></div>
+        </div>
+        <div class="field"><label>Address</label><textarea required name="address">Kawoosa Khalisa, Badgam</textarea></div>
+        <div class="field"><label>Order summary</label><div id="orderSummary" class="small"></div></div>
+
+        <div class="field"><label>Payment (UPI)</label>
+          <div style="display:flex;gap:12px;align-items:center">
+            <div class="qr">
+              <img id="upiQr" alt="UPI QR" width="120" height="120" />
+              <div>
+                <div><strong>UPI ID</strong></div>
+                <div class="small">7006927825@pz</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+          <button class="ghost" type="button" id="placeWhatsApp">Place via WhatsApp</button>
+          <button class="btn" type="submit">Confirm & Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // product data
+    const products = [
+      {id:1,title:'SPIRAL NOTEBOOK — 200 PAGES',pages:200,price:69, img:'https://picsum.photos/seed/notebook200/600/400'},
+      {id:2,title:'SPIRAL NOTEBOOK — 250 PAGES',pages:250,price:85, img:'https://picsum.photos/seed/notebook250/600/400'},
+      {id:3,title:'SPIRAL NOTEBOOK — 300 PAGES',pages:300,price:99, img:'https://picsum.photos/seed/notebook300/600/400'},
+      {id:4,title:'SPIRAL NOTEBOOK — 400 PAGES',pages:400,price:129, img:'https://picsum.photos/seed/notebook400/600/400'},
+      {id:5,title:'SPIRAL NOTEBOOK — 500 PAGES',pages:500,price:149, img:'https://picsum.photos/seed/notebook500/600/400'}
+    ];
+
+    const productGrid = document.getElementById('productGrid');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const orderSummary = document.getElementById('orderSummary');
+
+    // simple cart in localStorage
+    let cart = JSON.parse(localStorage.getItem('sarm_cart')||'{}');
+
+    function saveCart(){ localStorage.setItem('sarm_cart', JSON.stringify(cart)); renderCart(); }
+
+    function addToCart(id){
+      cart[id] = (cart[id]||0)+1; saveCart();
+    }
+
+    function removeFromCart(id){ delete cart[id]; saveCart(); }
+
+    function changeQty(id,delta){ cart[id] = Math.max(0,(cart[id]||0)+delta); if(cart[id]===0) delete cart[id]; saveCart(); }
+
+    function renderProducts(){
+      productGrid.innerHTML = '';
+      products.forEach(p=>{
+        const card = document.createElement('article'); card.className='card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}" loading="lazy" />
+          <h3>${p.title}</h3>
+          <div class="small">Pages: ${p.pages}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <div class="price">₹${p.price}</div>
+            <div class="small">/ piece</div>
+          </div>
+          <div class="actions">
+            <button class="btn addBtn" data-id="${p.id}">Add to cart</button>
+            <button class="ghost" onclick="shareProduct(${p.id})">Share</button>
+            <button class="ghost" onclick="openDirectWhatsApp(${p.id})">Order</button>
+          </div>
+        `;
+        productGrid.appendChild(card);
+      })
+      // attach listeners
+      document.querySelectorAll('.addBtn').forEach(b=>b.addEventListener('click',e=>{ addToCart(e.target.dataset.id) }))
+    }
+
+    function renderCart(){
+      const ids = Object.keys(cart).map(Number);
+      cartItemsEl.innerHTML='';
+      let total=0,count=0;
+      if(ids.length===0){ cartItemsEl.innerHTML='<div class="small">Cart is empty</div>'; }
+      ids.forEach(id=>{
+        const p = products.find(x=>x.id===id);
+        const qty = cart[id];
+        const row = document.createElement('div'); row.className='cart-row';
+        const subtotal = p.price * qty; total+=subtotal; count+=qty;
+        row.innerHTML = `
+          <img src="${p.img}" alt="${p.title}" />
+          <div style="flex:1">
+            <div style="font-weight:600">${p.title}</div>
+            <div class="small">₹${p.price} × ${qty} = ₹${subtotal}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end">
+            <div class="qty">
+              <button onclick="changeQty(${id},-1)">-</button>
+              <div style="padding:6px 10px">${qty}</div>
+              <button onclick="changeQty(${id},1)">+</button>
+            </div>
+            <button class="ghost" style="margin-top:8px" onclick="removeFromCart(${id})">Remove</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(row);
+      })
+      cartCountEl.textContent = `(${count})`;
+      cartTotalEl.textContent = total;
+      // update order summary
+      orderSummary.innerHTML = ids.length? ids.map(id=>{
+        const p = products.find(x=>x.id===id);
+        return `${p.title} — ${cart[id]} × ₹${p.price} = ₹${p.price*cart[id]}`
+      }).join('<br>') : '<em>No items selected</em>';
+    }
+
+    // clear cart
+    document.getElementById('clearCart').addEventListener('click',()=>{ cart={}; saveCart(); })
+
+    // checkout flow
+    const orderModal = document.getElementById('orderModal');
+    document.getElementById('checkoutBtn').addEventListener('click',()=>{
+      // prefill summary
+      orderModal.classList.add('open');
+    })
+    document.getElementById('closeModal').addEventListener('click',()=>orderModal.classList.remove('open'))
+
+    // generate UPI QR using Google Charts API
+    const upiId = encodeURIComponent('upi://pay?pa=7006927825@pz&pn=SARM%20ENTERPRISES');
+    document.getElementById('upiQr').src = `https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=${upiId}`;
+
+    // place via WhatsApp: open wa.me with prefilled text
+    document.getElementById('placeWhatsApp').addEventListener('click',()=>{
+      const name = document.querySelector('[name=name]').value||'Customer';
+      const phone = document.querySelector('[name=phone]').value||'';
+      const address = document.querySelector('[name=address]').value||'';
+      const ids = Object.keys(cart).map(Number);
+      if(ids.length===0){ alert('Cart is empty'); return }
+      let message = `Order from ${name}%0APhone:${phone}%0AAddress:${encodeURIComponent(address)}%0A%0A`;
+      ids.forEach(id=>{
+        const p=products.find(x=>x.id===id);
+        message += `${encodeURIComponent(p.title)} x ${cart[id]} — ₹${p.price*cart[id]}%0A`;
+      })
+      message += `%0ATotal: ₹${document.getElementById('cartTotal').textContent}%0AUPI:7006927825@pz`;
+      // open whatsapp
+      const wa = `https://wa.me/91${encodeURIComponent('7006927825')}?text=${message}`;
+      window.open(wa,'_blank');
+    })
+
+    // save order (local) on submit
+    document.getElementById('orderForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const order = {
+        id: 'ORD'+Date.now(),
+        name:form.get('name'), phone:form.get('phone'), address:form.get('address'), items:cart, total:document.getElementById('cartTotal').textContent,
+        created:new Date().toISOString()
+      }
+      // save orders in localStorage (file-based preference)
+      const orders = JSON.parse(localStorage.getItem('sarm_orders')||'[]');
+      orders.push(order); localStorage.setItem('sarm_orders', JSON.stringify(orders));
+      alert('Order saved locally. You can also send via WhatsApp or copy the UPI ID to pay.');
+      orderModal.classList.remove('open'); cart={}; saveCart();
+    })
+
+    // helper: prefilled whatsapp for a single product
+    window.openDirectWhatsApp = function(pid){
+      const p = products.find(x=>x.id===pid);
+      const text = `I would like to order: ${p.title} — Price: ₹${p.price}. Qty: 1%0AUPI:7006927825@pz`;
+      window.open(`https://wa.me/91${encodeURIComponent('7006927825')}?text=${encodeURIComponent(text)}`,'_blank');
+    }
+
+    window.shareProduct = function(pid){
+      const p = products.find(x=>x.id===pid);
+      const url = location.href + '?product=' + pid; // simple deep link
+      if(navigator.share){
+        navigator.share({title:p.title,text:`Buy ${p.title} from SARM ENTERPRISES — ₹${p.price}`,url}).catch(()=>{});
+      } else {
+        prompt('Copy & share this product link', url);
+      }
+    }
+
+    // attach global functions used in inline handlers
+    window.addToCart = addToCart; window.changeQty = changeQty; window.removeFromCart = removeFromCart;
+
+    renderProducts(); renderCart();
+
+    // quick QR download link (for printing)
+    // create a printed QR anchor
+    const footer = document.querySelector('footer');
+    const qrImg = document.createElement('img'); qrImg.src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${upiId}`; qrImg.width=90; qrImg.style.padding='6px'; qrImg.style.borderRadius='8px'; qrImg.alt='UPI QR';
+    const qrWrap = document.createElement('div'); qrWrap.style.display='flex'; qrWrap.style.alignItems='center'; qrWrap.style.gap='10px'; qrWrap.style.marginTop='12px';
+    const qrText = document.createElement('div'); qrText.innerHTML=`<div style="font-weight:600">Pay by UPI</div><div class="small">7006927825@pz</div>`;
+    qrWrap.appendChild(qrImg); qrWrap.appendChild(qrText); footer.appendChild(qrWrap);
+
+    // if user opened with ?product=ID highlight
+    (function checkQuery(){
+      const params = new URLSearchParams(location.search); const pid = params.get('product');
+      if(pid){ document.querySelectorAll('.card')[Number(pid)-1]?.scrollIntoView({behavior:'smooth'}); }
+    })();
+
+  </script>
+<script>
+  // QR controls
+  (function(){
+    const upiImg = document.getElementById('upiQrFooter');
+    const waImg = document.getElementById('waQrFooter');
+    const sizeSel = document.getElementById('qrSize');
+    const alignSel = document.getElementById('qrAlign');
+    const qrWrap = document.getElementById('qrWrap');
+    const downloadUpi = document.getElementById('downloadUpi');
+    const downloadWa = document.getElementById('downloadWa');
+    const downloadBranded = document.getElementById('downloadBranded');
+    const upiBranded = document.getElementById('upiQrBranded');
+    const centerBtn = document.getElementById('centerBranded');
+
+    function setSize(s){
+      upiImg.width = s; upiImg.height = s;
+      waImg.width = s; waImg.height = s;
+      // branded preview slightly larger
+      upiBranded.width = Math.round(s*1.6);
+      upiBranded.height = Math.round(s*1.6);
+    }
+    function setAlign(a){
+      if(a==='left') qrWrap.style.justifyContent='flex-start';
+      if(a==='center') qrWrap.style.justifyContent='center';
+      if(a==='right') qrWrap.style.justifyContent='flex-end';
+    }
+
+    sizeSel.addEventListener('change', e=> setSize(Number(e.target.value)));
+    alignSel.addEventListener('change', e=> setAlign(e.target.value));
+
+    // initial
+    setSize(Number(sizeSel.value)); setAlign(alignSel.value);
+
+    async function fetchAndDownload(url, filename){
+      try{
+        const resp = await fetch(url);
+        const blob = await resp.blob();
+        const a = document.createElement('a');
+        const objUrl = URL.createObjectURL(blob);
+        a.href = objUrl; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(objUrl);
+      }catch(err){
+        // fallback: open image in new tab
+        window.open(url,'_blank');
+      }
+    }
+
+    downloadUpi.addEventListener('click', e => { e.preventDefault(); const url = upiImg.src; fetchAndDownload(url, 'SARM_UPI_QR.png'); });
+    downloadWa.addEventListener('click', e => { e.preventDefault(); const url = waImg.src; fetchAndDownload(url, 'SARM_WhatsApp_QR.png'); });
+    downloadBranded.addEventListener('click', e=>{ e.preventDefault(); const url = upiBranded.src; fetchAndDownload(url, 'SARM_Branded_UPI_QR.png'); });
+
+    centerBtn.addEventListener('click', ()=>{
+      // replace header logo with branded QR (preview)
+      const headerImg = document.querySelector('.logo img');
+      if(headerImg){ headerImg.src = upiBranded.src; headerImg.style.height='80px'; headerImg.style.width='auto'; }
+      alert('Branded QR applied to header logo (you can undo by reloading).');
+    });
+
+  })();
+</script>
+</body>
+</html>
